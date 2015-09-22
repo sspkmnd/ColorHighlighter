@@ -114,25 +114,27 @@
             "regex": "[\\[][ ]*(?P<R>dec|perc|float)[ ]*[,][ ]*(?P<G>dec|perc|float)[ ]*[,][ ]*(?P<B>dec|perc|float)[ ]*[\\]]",
             "white": "[255, 255, 255]"
         },
-        "hsva": {
-            "description": "hsva(hue 0..255, s%, v%, alpha 0.0 .. 1.0) color format",
-            "regex": "hsva[(][ ]*(?P<R>hue)[ ]*[,][ ]*(?P<G>saturation)[ ]*[,][ ]*(?P<B>value)[ ]*[,][ ]*(?P<A>float)[ ]*[)]",
-            "white": "hsva(0, 0%, 100%, 1.)"
-        },
-        "hsv": {
-            "description": "hsv(hue 0..255, s%, v%) color format",
-            "regex": "hsv[(][ ]*(?P<R>hue)[ ]*[,][ ]*(?P<G>saturation)[ ]*[,][ ]*(?P<B>value)[ ]*[)]",
-            "white": "hsv(0, 0%, 100%)"
-        },
-        "hsla": {
-            "description": "hsla(hue 0..255, s%, v%, alpha 0.0 .. 1.0) color format",
-            "regex": "hsla[(][ ]*(?P<R>hue)[ ]*[,][ ]*(?P<G>saturation)[ ]*[,][ ]*(?P<B>lightness)[ ]*[,][ ]*(?P<A>float)[ ]*[)]",
-            "white": "hsla(0, 0%, 100%, 1.)"
-        },
-        "hsl": {
-            "description": "hsl(hue 0..255, s%, v%) color format",
-            "regex": "hsl[(][ ]*(?P<R>hue)[ ]*[,][ ]*(?P<G>saturation)[ ]*[,][ ]*(?P<B>lightness)[ ]*[)]",
-            "white": "hsl(0, 0%, 100%)"
+        // "hsva": {
+        //     "description": "hsva(hue 0..255, s%, v%, alpha 0.0 .. 1.0) color format",
+        //     "regex": "hsva[(][ ]*(?P<R>hue)[ ]*[,][ ]*(?P<G>saturation)[ ]*[,][ ]*(?P<B>value)[ ]*[,][ ]*(?P<A>float)[ ]*[)]",
+        //     "white": "hsva(0, 0%, 100%, 1.)"
+        // },
+        // "hsv": {
+        //     "description": "hsv(hue 0..255, s%, v%) color format",
+        //     "regex": "hsv[(][ ]*(?P<R>hue)[ ]*[,][ ]*(?P<G>saturation)[ ]*[,][ ]*(?P<B>value)[ ]*[)]",
+        //     "white": "hsv(0, 0%, 100%)"
+        // },
+        // "hsla": {
+        //     "description": "hsla(hue 0..255, s%, v%, alpha 0.0 .. 1.0) color format",
+        //     "regex": "hsla[(][ ]*(?P<R>hue)[ ]*[,][ ]*(?P<G>saturation)[ ]*[,][ ]*(?P<B>lightness)[ ]*[,][ ]*(?P<A>float)[ ]*[)]",
+        //     "white": "hsla(0, 0%, 100%, 1.)"
+        // },
+        // "hsl": {
+        //     "description": "hsl(hue 0..255, s%, v%) color format",
+        //     "regex": "hsl[(][ ]*(?P<R>hue)[ ]*[,][ ]*(?P<G>saturation)[ ]*[,][ ]*(?P<B>lightness)[ ]*[)]",
+        //     "white": "hsl(0, 0%, 100%)",
+        //     "disable_exts": [".sas"]
+        // },
         "hls_sas": {
             "description": "SAS HLS Color Codes - Hhhhllss color format",
             "regex": "(?i)h(?P<R>hue_sas)(?P<G>lightness_sas)(?P<B>saturation_sas)",
