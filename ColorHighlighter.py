@@ -478,6 +478,9 @@ class ColorConverter:
             return val*2
         elif typ == "hex2":
             return val
+        elif typ == "hex3":
+            i = int(val, 16)
+            return "%02X" % i if i < 256 else None
         elif typ == "dec":
             res = hex(int(val))[2:].upper()
             if len(res) == 1:
@@ -498,6 +501,8 @@ class ColorConverter:
     def _conv_val_chan_back(self, val, typ):
         if typ == "hex1" and val[0] == val[1]:
             return val[0]
+        elif typ == "hex3":
+            return "%03X" % int(val, 16)
         elif typ == "dec":
             return str(int(val, 16))
         elif typ == "float":
@@ -512,6 +517,24 @@ class ColorConverter:
         if h == 360:
             return 0
         return h / 360.0
+
+    def hue16_to_flt(self, val):
+        h = int(val, 16)
+        if h == 360:
+            return 0
+        return h / 360.0
+
+    def lightness16_to_flt(self, val):
+        l = int(val, 16)
+        if l == 255:
+            return 0
+        return l / 255.0
+
+    def saturation16_to_flt(self, val):
+        s = int(val, 16)
+        if s == 255:
+            return 0
+        return s / 255.0
 
     def per_to_flt(self, val):
         return int(val[:-1])/100.0
@@ -530,6 +553,10 @@ class ColorConverter:
             (vr, vg, vb) = (round(int(r*255)), round(int(g*255)), round(int(b*255)))
             return self.tohex(vr, vg, vb) + self._conv_val_chan(chans[3][0], chans[3][1])
 
+        if chans[0][1] == "hue_sas" and chans[1][1] == "lightness_sas" and chans[2][1] == "saturation_sas":
+            (r, g, b) = colorsys.hls_to_rgb(self.hue16_to_flt(chans[0][0]), self.lightness16_to_flt(chans[1][0]), self.saturation16_to_flt(chans[2][0]))
+            (vr, vg, vb) = (round(int(r*255)), round(int(g*255)), round(int(b*255)))
+            return self.tohex(vr, vg, vb) + self._conv_val_chan(chans[3][0], chans[3][1])
 
         res = "#"
         for c in chans:
@@ -599,6 +626,9 @@ class ColorConverter:
         else:
             chans.append(["FF", types[3]])
 
+        print("We are here - _col_to_chans_match")
+        print(chans)
+
         if chans[0][1] == "hue" and chans[1][1] == "saturation" and chans[2][1] == "value":
             (nh, ns, nv) = colorsys.rgb_to_hsv(int(chans[0][0], 16)/255.0, int(chans[1][0], 16)/255.0, int(chans[2][0], 16)/255.0)
             return [[str(int(nh * 360)), chans[0][1]], [str(int(ns * 100)) + '%', chans[1][1]], [str(int(nv * 100)) + '%', chans[2][1]], [self._conv_val_chan_back(chans[3][0], chans[3][1]), chans[3][1]]]
@@ -606,6 +636,10 @@ class ColorConverter:
         if chans[0][1] == "hue" and chans[1][1] == "saturation" and chans[2][1] == "lightness":
             (nh, nv, ns) = colorsys.rgb_to_hls(int(chans[0][0], 16)/255.0, int(chans[1][0], 16)/255.0, int(chans[2][0], 16)/255.0)
             return [[str(int(nh * 360)), chans[0][1]], [str(int(ns * 100)) + '%', chans[1][1]], [str(int(nv * 100)) + '%', chans[2][1]], [self._conv_val_chan_back(chans[3][0], chans[3][1]), chans[3][1]]]
+
+        # if chans[0][1] == "hue_sas" and chans[1][1] == "saturation_sas" and chans[2][1] == "lightness_sas":
+        #     (nh, nv, ns) = colorsys.rgb_to_hls(int(chans[0][0], 16)/255.0, int(chans[1][0], 16)/255.0, int(chans[2][0], 16)/255.0)
+        #     return [[str(int(nh * 360)), chans[0][1]], [str(int(ns * 100)) + '%', chans[1][1]], [str(int(nv * 100)) + '%', chans[2][1]], [self._conv_val_chan_back(chans[3][0], chans[3][1]), chans[3][1]]]
 
         for c in chans:
             c[0] = self._conv_val_chan_back(c[0], c[1])
